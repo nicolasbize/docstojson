@@ -1,0 +1,28 @@
+{
+  "Button.jsx": {
+    "name": "Button",
+    "ext": "React.Component",
+    "comments": "A simple button class.",
+    "example": "<Button />",
+    "properties": [
+      {
+        "name": "bool",
+        "type": "disabled",
+        "def": "false",
+        "comments": "True to prevent user interaction with the button."
+      },
+      {
+        "name": "bool",
+        "type": "enabled",
+        "def": "true",
+        "comments": "Whether it's enabled or not."
+      },
+      {
+        "name": "integer",
+        "type": "number",
+        "def": "30",
+        "comments": "my new number."
+      }
+    ]
+  }
+}

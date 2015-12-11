@@ -1,0 +1,34 @@
+{
+  "name": "docstojson",
+  "version": "0.1.0",
+  "description": "Generate code docs as a reusable json object",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/nicolasbize/docstojson.git"
+  },
+  "preferGlobal": true,
+  "bin": {
+    "docstojson": "index.js"
+  },
+  "keywords": [
+    "code",
+    "json",
+    "documentation",
+    "generator"
+  ],
+  "author": "Nicolas Bize <nicolasbize@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nicolasbize/docstojson/issues"
+  },
+  "homepage": "https://github.com/nicolasbize/docstojson#readme",
+  "dependencies": {
+    "commander": "^2.9.0",
+    "async": "^1.4.2",
+    "node-dir": "^0.1.10",
+    "watch": "^0.16.0"
+  }
+}
