@@ -35,8 +35,8 @@ module.exports = {
         cls.properties = [];
       }
       cls.properties.push({
-        name: this.clean(props[1]),
-        type: this.clean(props[2]),
+        type: this.clean(props[1]),
+        name: this.clean(props[2]),
         def: this.clean(props[3]),
         comments: this.clean(props[4])
       });
