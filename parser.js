@@ -14,13 +14,21 @@ module.exports = {
   clean: function(line) {
     return line.replace(/\s\*\s/gm, "").trim();
   },
+  parseLinks: function(line) {
+    var rgx = /\{@link ([^\s\}]+){1}( [^\}]+)?\}/gm; // parse @link directives
+    return line.replace(rgx, function(match, href, content) {
+      var target = href.startsWith('#') ? '_self' : '_blank',
+          text = (content || href).trim();
+      return '<a href="' + href + '" target="' + target + '"">' + text + '</a>';
+    });
+  },
   addClassCore: function(cls, comment, filename) {
     var rgx = /[\s\S]*@class ([a-zA-Z\.]+)[\s\S]*@extends ([a-zA-Z\.]+)([\s\S]*)@example([\s\S]*)/gm;
     var props = rgx.exec(comment);
     if (props && props.length === 5) {
       cls.name = this.clean(props[1]);
       cls.ext = this.clean(props[2]);
-      cls.comments = this.clean(props[3]);
+      cls.comments = this.parseLinks(this.clean(props[3]));
       cls.example = this.clean(props[4]);
     } else {
       process.stderr.write(filename + " : couldn't find all core properties @class, @extends, @example... missing something?\n");
@@ -38,7 +46,7 @@ module.exports = {
         type: this.clean(props[1]),
         name: this.clean(props[2]),
         def: this.clean(props[3]),
-        comments: this.clean(props[4])
+        comments: this.parseLinks(this.clean(props[4]))
       });
     }
     return cls;
