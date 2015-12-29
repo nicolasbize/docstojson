@@ -17,7 +17,7 @@ function list(val) {
 }
 
 program
-  .version("0.1.0")
+  .version("0.1.2")
   .usage('[options] <folder ...>')
   .option('-o, --output [value]', 'output file (default to docs.json)')
   .option('-p, --pretty', 'pretty print JSON')
