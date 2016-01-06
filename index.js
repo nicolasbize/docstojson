@@ -143,10 +143,15 @@ if (process.argv.length === 2) {
   if (watch) {
     var watch = require("watch");
     watch.watchTree(paths[0], {
+      ignoreDotFiles: true,
       filter: function(filename) {
-        for(var i=0; i<program.extensions.length; i++) {
-          if (filename.endsWith("." + program.extensions[i])) {
-            return true;
+        if (fs.statSync(filename).isDirectory()) {
+          return true;
+        } else {
+          for(var i=0; i<program.extensions.length; i++) {
+            if (filename.endsWith("." + program.extensions[i])) {
+              return true;
+            }
           }
         }
         return false;
