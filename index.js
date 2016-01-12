@@ -17,7 +17,7 @@ function list(val) {
 }
 
 program
-  .version("0.1.2")
+  .version("0.1.4")
   .usage('[options] <folder ...>')
   .option('-o, --output [value]', 'output file (default to docs.json)')
   .option('-p, --pretty', 'pretty print JSON')
@@ -59,7 +59,7 @@ function exitWithResult(result, preventExit) {
     JSON.stringify(result, null, 2) :
     JSON.stringify(result);
   if (asModule) {
-    result = "module.exports = " + result;
+    result = "module.exports = " + result + ";";
   }
 
   fs.writeFileSync(output, result);
