@@ -23,7 +23,7 @@ module.exports = {
     });
   },
   addClassCore: function(cls, comment, filename) {
-    var rgx = /[\s\S]*@class ([a-zA-Z\.]+)[\s\S]*@extends ([a-zA-Z\.]+)([\s\S]*)@example([\s\S]*)/gm;
+    var rgx = /[\s\S]*@class ([a-zA-Z0-9\.]+)[\s\S]*@extends ([a-zA-Z\.]+)([\s\S]*)@example([\s\S]*)/gm;
     var props = rgx.exec(comment);
     if (props && props.length === 5) {
       cls.name = this.clean(props[1]);
