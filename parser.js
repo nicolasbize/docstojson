@@ -51,6 +51,42 @@ module.exports = {
     }
     return cls;
   },
+  addClassFunction: function(cls, comment, filename) {
+    var rgx = /@function ([^\s]*)\s*?([\s\S]*)/gm;
+    var func = rgx.exec(comment);
+    if (func && func.length === 3) {
+      if (!cls.functions) {
+        cls.functions = [];
+      }
+      var parsedComments = this.parseFunctionComments(func[2], filename);
+      cls.functions.push({
+        name: this.clean(func[1]),
+        comments: this.parseLinks(parsedComments.comments),
+        params: parsedComments.params
+      });
+    }
+    return cls;
+  },
+  parseFunctionComments: function(comments, filename) {
+    var rgx = /@param \{([^\}]*)\} ([^\s]*)\s*?([^\*]*)/gm;
+    var matches = comments.match(rgx);
+    var params = [];
+    for (var i = 0; i < matches.length; i++) {
+      var param = rgx.exec(matches[i]);
+      if (param) {
+        params.push({
+          type: param[1],
+          name: param[2],
+          comments: this.clean(param[3])
+        });
+      } else {
+        process.stderr.write(filename + " : unable to parse params from @function doc comment. Please check comment syntax.\n    " + matches[i]);
+      }
+      rgx.lastIndex = 0;
+      comments = comments.replace(matches[i], '');
+    }
+    return { comments: comments.replace(/\*\s/gm, ''), params: params };
+  },
   parse: function(contents, filename) {
     if (contents.indexOf("@class") < 0) return undefined;
     var comments = this.getCommentSections(contents);
@@ -61,6 +97,8 @@ module.exports = {
         cls = this.addClassCore(cls, comment, filename);
       } else if (comment.indexOf("@prop") > -1) {
         cls = this.addClassProp(cls, comment, filename);
+      } else if (comment.indexOf("@function") > -1) {
+        cls = this.addClassFunction(cls, comment, filename);
       }
     }
     return cls;
