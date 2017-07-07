@@ -11,6 +11,7 @@
 
 var program = require('commander');
 var os = require('os');
+var pathModule = require('path');
 var pkg = require('./package.json');
 var parser = require('./parser.js');
 
@@ -22,6 +23,7 @@ program
   .version(pkg.version)
   .usage('[options] <folder ...>')
   .option('-o, --output [value]', 'output file (default to docs.json)')
+  .option('-s, --separator [value]', 'output file will be created with given path separator (defaults to system path separator)')
   .option('-p, --pretty', 'pretty print JSON')
   .option('-x, --extensions [extensions]', 'file extensions to consider (default to js,jsx)', list, ['js','jsx'])
   .option('-i, --ignore [folders]', 'folders to ignore (default to test,node_modules)', list, ['test','node_modules'])
@@ -40,6 +42,7 @@ var extensions = new RegExp('\\.(?:' + program.extensions.join('|') + ')$');
 var ignoreDir = program.ignore;
 var asModule = program.module;
 var watch = program.watch;
+var separator = program.separator;
 
 function writeError(msg, path) {
   if (path) {
@@ -82,8 +85,9 @@ function traverseDir(path, result, done) {
         exitWithError(error);
       }
       try {
-        if (os.platform() === "win32") {
-          result[filename.replace(/\\/g,"/")] = parser.parse(content, filename);
+        if (separator) {
+          var regex = new RegExp(pathModule.sep,'g');
+          result[filename.replace(regex,separator)] = parser.parse(content, filename);
         } else {
           result[filename] = parser.parse(content, filename);
         }
