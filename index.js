@@ -10,6 +10,7 @@
  */
 
 var program = require('commander');
+var os = require('os');
 var parser = require('./parser.js');
 
 function list(val) {
@@ -80,7 +81,11 @@ function traverseDir(path, result, done) {
         exitWithError(error);
       }
       try {
-        result[filename] = parser.parse(content, filename);
+        if (os.platform() === "win32") {
+          result[filename.replace(/\\/g,"/")] = parser.parse(content, filename);
+        } else {
+          result[filename] = parser.parse(content, filename);
+        }
       } catch(error) {
         writeError(error, filename);
       }
