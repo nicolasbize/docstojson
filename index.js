@@ -11,6 +11,7 @@
 
 var program = require('commander');
 var os = require('os');
+var pkg = require('./package.json');
 var parser = require('./parser.js');
 
 function list(val) {
@@ -18,7 +19,7 @@ function list(val) {
 }
 
 program
-  .version("0.1.5")
+  .version(pkg.version)
   .usage('[options] <folder ...>')
   .option('-o, --output [value]', 'output file (default to docs.json)')
   .option('-p, --pretty', 'pretty print JSON')
