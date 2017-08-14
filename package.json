@@ -1,6 +1,6 @@
 {
   "name": "docstojson",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Generate code docs as a reusable json object",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

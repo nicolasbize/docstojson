@@ -86,7 +86,7 @@ function traverseDir(path, result, done) {
       }
       try {
         if (separator) {
-          var regex = new RegExp(pathModule.sep,'g');
+          var regex = new RegExp("\\" + pathModule.sep,'g');
           result[filename.replace(regex,separator)] = parser.parse(content, filename);
         } else {
           result[filename] = parser.parse(content, filename);
