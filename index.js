@@ -119,7 +119,12 @@ function createDocFile(preventExit) {
       }
       else {
         try {
-          result[path] = parser.parse(fs.readFileSync(path), path);
+          if (separator) {
+            var regex = new RegExp("\\" + pathModule.sep,'g');
+            result[path.replace(regex,separator)] = parser.parse(fs.readFileSync(path), path);
+         } else {
+            result[path] = parser.parse(fs.readFileSync(path), path);
+         }
         } catch(error) {
           writeError(error, path);
         }
